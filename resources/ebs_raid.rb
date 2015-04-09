@@ -16,7 +16,6 @@ state_attrs :aws_access_key,
             :mount_point_owner,
             :snapshots
 
-
 attribute :aws_access_key,        :kind_of => String
 attribute :aws_secret_access_key, :kind_of => String
 attribute :mount_point,           :kind_of => String
@@ -33,4 +32,3 @@ attribute :disk_type,             :kind_of => String, :default => 'standard'
 attribute :disk_piops,            :kind_of => Integer, :default => 0
 attribute :existing_raid,         :kind_of => [ TrueClass, FalseClass ]
 attribute :hvm,                   :kind_of => [ TrueClass, FalseClass ], :default => false
-

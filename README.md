@@ -16,14 +16,6 @@ not limited to:
 
 * [Route53](http://community.opscode.com/cookbooks/route53)
 
-**Note** This cookbook uses the `right_aws` RubyGem to interact with
-  the AWS API because at the time it was written, `fog` and `aws-sdk`
-  were not available. Further, both of those gems require `nokogiri`
-  which requires compiling native extensions, which means build tools
-  are required. We do not plan at this time to change the underlying
-  Ruby library used in order to limit the external dependencies for
-  this cookbook.
-
 Requirements
 ============
 
@@ -113,7 +105,8 @@ For resource tags:
   "Statement": [
     {
       "Action": [
-        "ec2:CreateTags"
+        "ec2:CreateTags",
+        "ec2:DescribeTags"
       ],
       "Sid": "Stmt1381536708000",
       "Resource": [
@@ -131,7 +124,7 @@ Recipes
 default.rb
 ----------
 
-The default recipe installs the `right_aws` RubyGem, which this
+The default recipe installs the `aws-sdk` RubyGem, which this
 cookbook requires in order to work with the EC2 API. Make sure that
 the aws recipe is in the node or role `run_list` before any resources
 from this cookbook are used.
@@ -146,7 +139,7 @@ during the Compile Phase of the Chef run.
 ec2_hints.rb
 ------------
 
-This recipe is used to setup the ec2 hints for ohai in the case that an 
+This recipe is used to setup the ec2 hints for ohai in the case that an
 instance is not created using knife-ec2.
 
 Libraries
@@ -201,6 +194,8 @@ Attribute Parameters:
 * `piops` - number of Provisioned IOPS to provision, must be >= 100
 * `existing_raid` - whether or not to assume the raid was previously assembled on existing volumes (default no)
 * `hvm` - if set to true, device names will use the sdX convention instead of sdxX in order to support HVM instances (default false)
+* `encrypted` - specify if the EBS should be encrypted
+* `kms_key_id` - the full ARN of the AWS Key Management Service (AWS KMS) master key to use when creating the encrypted volume (defaults to master key if not specified)
 
 ## ebs_raid.rb
 
